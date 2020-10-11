@@ -5,10 +5,15 @@ const baseUrl = 'https://pixabay.com/api/';
 
 export default {
   async getImages(query, page, perPage) {
-    let additionalUrl = `?image_type=photo&orientation=horizontal&q=${query}&page=${page}&per_page=${perPage}&key=${apiKey}`;
+    try {
+      let additionalUrl = `?image_type=photo&orientation=horizontal&q=${query}&page=${page}&per_page=${perPage}&key=${apiKey}`;
 
-    const result = await fetch(`${baseUrl}${additionalUrl}`);
+      const result = await fetch(`${baseUrl}${additionalUrl}`);
 
-    return result.json();
+      return await result.json();
+    } catch (e) {
+      console.log('Server error');
+      return [];
+    }
   },
 };

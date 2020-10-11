@@ -4,15 +4,11 @@ import template from '../templates/template.hbs';
 import * as basicLightbox from 'basiclightbox';
 import 'basicLightbox/dist/basicLightbox.min.css';
 import InfiniteScroll from 'infinite-scroll';
-// import {
-//   alert,
-//   error,
-//   defaultModules,
-// } from '@pnotify/core/dist/PNotify.js';
-// import * as PNotifyMobile from '@pnotify/mobile/dist/PNotifyMobile.js';
-// import '@pnotify/core/dist/BrightTheme.css';
-// import '@pnotify/core/dist/PNotify.css';
-// defaultModules.set(PNotifyMobile, {});
+import { alert, error, defaultModules } from '@pnotify/core/dist/PNotify.js';
+import * as PNotifyMobile from '@pnotify/mobile/dist/PNotifyMobile.js';
+import '@pnotify/core/dist/BrightTheme.css';
+import '@pnotify/core/dist/PNotify.css';
+defaultModules.set(PNotifyMobile, {});
 
 class RenderImg {
   constructor() {
@@ -35,16 +31,24 @@ class RenderImg {
       this.page,
       this.perPage,
     );
-    const images = template(hits);
-    refs.galleryList.insertAdjacentHTML('beforeend', images);
-    //refs.button.classList.remove('hidden');
-    window.scrollTo({
-      top:
-        refs.galleryList
-          .querySelector('li:nth-last-of-type(12)')
-          .getBoundingClientRect().top + window.pageYOffset,
-      behavior: 'smooth',
-    });
+    if (!hits.length) {
+      return error({
+        text: 'Not found...try again...',
+        hide: true,
+        delay: 3000,
+      });
+    } else {
+      const images = template(hits);
+      refs.galleryList.insertAdjacentHTML('beforeend', images);
+      //refs.button.classList.remove('hidden');
+      window.scrollTo({
+        top:
+          refs.galleryList
+            .querySelector('li:nth-last-of-type(12)')
+            .getBoundingClientRect().top + window.pageYOffset,
+        behavior: 'smooth',
+      });
+    }
   }
 }
 

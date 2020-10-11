@@ -83,6 +83,7 @@ body {
 
 .input-text {
   border: none;
+  outline: none;
   border-radius: 50%;
   background-color: blanchedalmond;
   width: 217px;
