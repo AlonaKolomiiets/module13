@@ -12,7 +12,7 @@ export default {
 
       return await result.json();
     } catch (e) {
-      console.log('Server error');
+      console.log(e);
       return [];
     }
   },

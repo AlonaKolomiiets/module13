@@ -1,6 +1,7 @@
 import refs from './refs.js';
 import apiService from './apiService.js';
 import template from '../templates/template.hbs';
+//import debounce from 'lodash.debounce';
 import * as basicLightbox from 'basiclightbox';
 import 'basicLightbox/dist/basicLightbox.min.css';
 import InfiniteScroll from 'infinite-scroll';
@@ -35,19 +36,22 @@ class RenderImg {
       return error({
         text: 'Not found...try again...',
         hide: true,
-        delay: 3000,
+        delay: 2000,
       });
     } else {
       const images = template(hits);
       refs.galleryList.insertAdjacentHTML('beforeend', images);
       //refs.button.classList.remove('hidden');
-      window.scrollTo({
-        top:
-          refs.galleryList
-            .querySelector('li:nth-last-of-type(12)')
-            .getBoundingClientRect().top + window.pageYOffset,
-        behavior: 'smooth',
-      });
+
+      //   setTimeout(() => {
+      //     window.scrollTo({
+      //       top:
+      //         refs.galleryList
+      //           .querySelector('li:nth-last-of-type(12)')
+      //           .getBoundingClientRect().top + window.pageYOffset,
+      //       behavior: 'smooth',
+      //     });
+      //   }, 1000);
     }
   }
 }
@@ -82,7 +86,6 @@ refs.galleryList.addEventListener('click', event => {
 const infScroll = new InfiniteScroll(refs.galleryList, {
   // options
   path: '{{#}}',
-  append: '.post',
   history: false,
 });
 infScroll.on('scrollThreshold', () => {
